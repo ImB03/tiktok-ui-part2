@@ -37,7 +37,6 @@ export default function Menu({ children, items = [], onChange = defaultFn }) {
   return (
     <Tippy //thư viện cho các nav ẩn
       interactive //để có thể tương tác với kết quả tìm kiếm
-      visible
       offset={[12, 8]}
       delay={[0, 700]}
       placement="bottom-end"

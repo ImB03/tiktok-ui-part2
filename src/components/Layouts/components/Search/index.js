@@ -1,7 +1,6 @@
-import React from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, useEffect, useFef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 
@@ -14,23 +13,32 @@ import { SearchIcon } from '~/components/Icons';
 const cx = classNames.bind(styles);
 
 export default function Search() {
-  const [searchResult, setSearchResult] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const [searchResult, setSearchResult] = useState([]);
+  const [showResult, setShowResult] = useState(true);
 
-  const inputRef = useFef();
-
-  console.log(searchResult);
+  const inputRef = useRef();
 
   useEffect(() => {
     setTimeout(() => {
-      setSearchResult([1]);
+      setSearchResult(searchValue);
     }, 1000);
-  }, []);
+  }, [searchValue]);
+
+  const handleClear = () => {
+    setSearchValue('');
+    inputRef.current.focus();
+    setSearchResult([]);///cách 1 để ẩn/hiện search
+  };
+
+  const handleHideResult = () => {
+    setShowResult(false);
+  };
 
   return (
     <HeadlessTippy //thư viện cho các nav ẩn
       interactive //để có thể tương tác với kết quả tìm kiếm
-      visible={searchResult.length > 0} //điều kiện để hiện kết quả tìm
+      visible={showResult && searchResult.length > 0} //điều kiện để hiện kết quả tìm
       render={(attrs) => (
         <div className={cx('search-result')} tabIndex="-1" {...attrs}>
           <PopperWrapper>
@@ -43,23 +51,20 @@ export default function Search() {
           </PopperWrapper>
         </div>
       )}
+      onClickOutside={handleHideResult}
     >
       <div className={cx('search')}>
         <input
-          // ref={inputRef}
+          ref={inputRef}
           value={searchValue}
           placeholder="Search accouts and videos"
           spellCheck={false}
           onChange={(e) => setSearchValue(e.target.value)}
+          onFocus={() => setShowResult(true)}///cách 1 để ẩn/hiện search
+          // onClick={()=>{setShowResult(true)}}///cách 2 để ẩn/hiện search
         />
         {!!searchValue && (
-          <button
-            className={cx('clear')}
-            onClick={() => {
-              setSearchValue('');
-              // inputRef.current.focus();
-            }}
-          >
+          <button className={cx('clear')} onClick={handleClear}>
             <FontAwesomeIcon icon={faCircleXmark} />
           </button>
         )}
