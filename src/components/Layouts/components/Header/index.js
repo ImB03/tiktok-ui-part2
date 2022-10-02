@@ -121,7 +121,7 @@ export default function Header() {
               <Image
                 className={cx('user-avata')}
                 alt="Dat va li"
-                src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/be22b8593ea95c8835d47f4b5309ec16~c5_300x300.webp?x-expires=1663207200&x-signature=jx7IZv4arZkHQocnOCNzF2iQH1I%3D"
+                src="https://kynguyenlamdep.com/wp-content/uploads/2022/06/co-nang-nhi-nhanh-700x700.jpg"
               />
             ) : (
               <button className={cx('more-btn')}>
