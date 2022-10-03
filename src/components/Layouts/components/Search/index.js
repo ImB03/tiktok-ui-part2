@@ -50,6 +50,13 @@ export default function Search() {
     setShowResult(false);
   };
 
+  const handleChange = (e) => {
+    const searchValue = e.target.value;
+    if (!searchValue.startsWith(' ')) {
+      setSearchValue(searchValue);
+    }
+  };
+
   return (
     <HeadlessTippy //thư viện cho các nav ẩn
       interactive //để có thể tương tác với kết quả tìm kiếm
@@ -73,7 +80,7 @@ export default function Search() {
           value={searchValue}
           placeholder="Search accouts and videos"
           spellCheck={false}
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={handleChange}
           onFocus={() => setShowResult(true)} ///cách 1 để ẩn/hiện search
           // onClick={()=>{setShowResult(true)}}///cách 2 để ẩn/hiện search
         />
@@ -84,7 +91,7 @@ export default function Search() {
         )}
         {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
 
-        <button className={cx('search-btn')}>
+        <button className={cx('search-btn')} onMouseDown={e => e.preventDefault()}>
           <SearchIcon />
         </button>
       </div>

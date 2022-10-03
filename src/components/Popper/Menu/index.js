@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 
 const defaultFn = () => {};
 
-export default function Menu({ children, items = [], onChange = defaultFn }) {
+export default function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn }) {
   const [history, setHistory] = useState([{ data: items }]);
   const current = history[history.length - 1];
 
@@ -39,6 +39,7 @@ export default function Menu({ children, items = [], onChange = defaultFn }) {
       interactive //để có thể tương tác với kết quả tìm kiếm
       offset={[12, 8]}
       delay={[0, 700]}
+      hideOnClick={hideOnClick}
       placement="bottom-end"
       render={(attrs) => (
         <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
